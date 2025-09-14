@@ -10,10 +10,19 @@ import najib.io.modules.product.mapper.ProductMapper;
 import najib.io.modules.product.repository.ProductRepository;
 import najib.io.modules.product.validator.ProductValidator;
 
+import java.util.List;
+
 @ApplicationScoped
 public class ProductService {
     @Inject
     ProductRepository productRepository;
+
+    @Inject
+    ProductMapper productMapper;
+
+    public List<ProductEntity> findAllProducts() {
+        return productRepository.findAllActive();
+    }
 
     public ProductEntity findById(Long id) {
         ProductEntity product = productRepository.findById(id);
@@ -26,7 +35,7 @@ public class ProductService {
     @Transactional
     public ProductEntity saveProduct(ProductRequestDto payload) {
         ProductValidator.validateCreate(payload);
-        ProductEntity product = ProductMapper.toEntity(payload);
+        ProductEntity product = productMapper.toEntity(payload);
         productRepository.persist(product);
         return product;
     }

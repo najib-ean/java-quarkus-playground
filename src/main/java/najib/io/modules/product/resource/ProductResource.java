@@ -22,23 +22,26 @@ public class ProductResource {
     @Inject
     ProductService productService;
 
+    @Inject
+    ProductMapper productMapper;
+
     @GET
-    public List<String> getAllProducts() {
-        
-        return List.of("najib", "raihan");
+    public ApiResponse<List<ProductResponseDto>> getAllProducts() {
+        List<ProductEntity> products = productService.findAllProducts();
+        return ApiResponse.ok(productMapper.toResponse(products));
     }
 
     @GET
     @Path("/{id}")
     public ApiResponse<ProductResponseDto> getProduct(@PathParam("id") Long productId) {
         ProductEntity product = productService.findById(productId);
-        return ApiResponse.ok(ProductMapper.toResponse(product));
+        return ApiResponse.ok(productMapper.toResponse(product));
     }
 
     @POST
-    public Response createProduct(ProductRequestDto payload) {
+    public ApiResponse<ProductResponseDto> createProduct(ProductRequestDto payload) {
         ProductEntity productSaved = productService.saveProduct(payload);
-        return Response.ok(ProductMapper.toResponse(productSaved)).build();
+        return ApiResponse.ok(productMapper.toResponse(productSaved));
     }
 
     @PUT
