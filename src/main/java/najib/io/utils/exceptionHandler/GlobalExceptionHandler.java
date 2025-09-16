@@ -1,16 +1,12 @@
 package najib.io.utils.exceptionHandler;
 
 import io.quarkus.security.UnauthorizedException;
-import jakarta.validation.ConstraintViolationException;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 import najib.io.utils.apiresponse.ApiResponse;
 import najib.io.utils.validation.ValidationException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Provider
 public class GlobalExceptionHandler implements ExceptionMapper<Exception> {
@@ -25,28 +21,8 @@ public class GlobalExceptionHandler implements ExceptionMapper<Exception> {
                     status = Response.Status.UNAUTHORIZED;
             case ValidationException validationException -> {
                 status = Response.Status.BAD_REQUEST;
-
-
                 return Response.status(status).entity(ApiResponse.fail("Validation Error", validationException.getErrors())).build();
             }
-            case ConstraintViolationException constraintViolationException -> {
-                status = Response.Status.BAD_REQUEST;
-
-                Map<String, String> errors = new HashMap<>();
-
-                constraintViolationException.getConstraintViolations().forEach(cv -> {
-                    String fieldName = cv.getPropertyPath().toString();
-                    fieldName = fieldName.contains(".") ? fieldName.substring(fieldName.lastIndexOf(".") + 1) : fieldName;
-                    errors.put(fieldName, cv.getMessage());
-                });
-
-                System.out.println("TEST MASUK APA NGGAK");
-
-
-                return Response.status(status).entity(ApiResponse.fail("ConstraintViolation", errors)).build();
-            }
-
-
             default -> {
                 status = Response.Status.INTERNAL_SERVER_ERROR;
                 message = "Internal Server Error";
