@@ -2,14 +2,14 @@ package najib.io.modules.product.mapper;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import najib.io.common.BaseMapper;
-import najib.io.modules.product.dto.ProductRequestDto;
-import najib.io.modules.product.dto.ProductResponseDto;
+import najib.io.modules.product.dto.ProductReqDto;
+import najib.io.modules.product.dto.ProductResDto;
 import najib.io.modules.product.entity.ProductEntity;
 
 @ApplicationScoped
-public class ProductMapper extends BaseMapper<ProductEntity, ProductRequestDto, ProductResponseDto> {
+public class ProductMapper extends BaseMapper<ProductEntity, ProductReqDto, ProductResDto> {
     @Override
-    public ProductEntity toEntity(ProductRequestDto payload) {
+    public ProductEntity toEntity(ProductReqDto payload) {
         ProductEntity product = new ProductEntity();
         product.setName(payload.getName());
         product.setQuantity(payload.getQuantity());
@@ -17,9 +17,17 @@ public class ProductMapper extends BaseMapper<ProductEntity, ProductRequestDto, 
         return product;
     }
 
+    public ProductEntity toEntity(ProductReqDto payload, ProductEntity entity) {
+        ProductEntity product = new ProductEntity();
+        product.setName(payload.getName() != null ? payload.getName() : entity.getName());
+        product.setQuantity(payload.getQuantity() != null ? payload.getQuantity() : entity.getQuantity());
+
+        return product;
+    }
+
     @Override
-    public ProductResponseDto toResponse(ProductEntity productEntity) {
-        ProductResponseDto dto = new ProductResponseDto();
+    public ProductResDto toResponse(ProductEntity productEntity) {
+        ProductResDto dto = new ProductResDto();
         dto.setId(productEntity.getId());
         dto.setName(productEntity.getName());
         dto.setQuantity(productEntity.getQuantity());

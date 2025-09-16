@@ -6,6 +6,8 @@ import java.util.List;
 public abstract class BaseMapper<Entity, Req, Res> {
     public abstract Entity toEntity(Req payload);
 
+    public abstract Entity toEntity(Req payload, Entity entity);
+
     public abstract Res toResponse(Entity entity);
 
     public List<Res> toResponse(List<Entity> entities) {
