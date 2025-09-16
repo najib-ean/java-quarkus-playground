@@ -4,16 +4,16 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
-import najib.io.modules.product.dto.ProductRequestDto;
+import najib.io.modules.product.dto.ProductReqDto;
 import najib.io.modules.product.entity.ProductEntity;
 import najib.io.modules.product.mapper.ProductMapper;
 import najib.io.modules.product.repository.ProductRepository;
-import najib.io.modules.product.validator.ProductValidator;
 
 import java.util.List;
 
 @ApplicationScoped
 public class ProductService {
+
     @Inject
     ProductRepository productRepository;
 
@@ -33,11 +33,18 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductEntity saveProduct(ProductRequestDto payload) {
-        ProductValidator.validateCreate(payload);
+    public ProductEntity saveProduct(ProductReqDto payload) {
+        // todo -- make validation here
         ProductEntity product = productMapper.toEntity(payload);
         productRepository.persist(product);
         return product;
     }
 
+    @Transactional
+    public ProductEntity updateProduct(Long productId, ProductReqDto payload) {
+        ProductEntity productFound = findById(productId);
+        ProductEntity product = productMapper.toEntity(payload, productFound);
+        productRepository.persist(product);
+        return product;
+    }
 }
