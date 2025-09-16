@@ -18,11 +18,10 @@ public class ProductMapper extends BaseMapper<ProductEntity, ProductReqDto, Prod
     }
 
     public ProductEntity toEntity(ProductReqDto payload, ProductEntity entity) {
-        ProductEntity product = new ProductEntity();
-        product.setName(payload.getName() != null ? payload.getName() : entity.getName());
-        product.setQuantity(payload.getQuantity() != null ? payload.getQuantity() : entity.getQuantity());
+        entity.setName(payload.getName() != null ? payload.getName() : entity.getName());
+        entity.setQuantity(payload.getQuantity() != null ? payload.getQuantity() : entity.getQuantity());
 
-        return product;
+        return entity;
     }
 
     @Override

@@ -2,73 +2,87 @@ package najib.io.utils.validation;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class Validator {
-    private final String moduleName;
-    private final Map<String, Object> errors = new HashMap<>();
-    private String currentField;
-    private Object currentValue;
+    private final Map<String, String> errors = new HashMap<>();
 
-    private Validator(String moduleName) {
-        this.moduleName = moduleName;
+    /**
+     * required & not blank
+     */
+    public Validator required(String field, String value, String msg) {
+        if (value == null || value.isBlank()) errors.put(field, msg);
+        return this;
     }
 
-    public static Validator forModule(String moduleName) {
-        return new Validator(moduleName);
+    /**
+     * required (must exist)
+     */
+    public Validator required(String field, Object value, String msg) {
+        if (value == null) errors.put(field, msg);
+        return this;
     }
 
-    //validating specific field.
-    public FieldValidator field(String fieldName, Object value) {
-        this.currentField = fieldName;
-        this.currentValue = value;
-        return new FieldValidator(this, fieldName, value);
+    /**
+     * not blank if provided (PATCH-friendly)
+     */
+    public Validator notBlankIfPresent(String field, String value, String msg) {
+        if (value != null && value.isBlank()) errors.put(field, msg);
+        return this;
     }
 
-    //collect errors.
-    void addError(String fieldName, String message) {
-        errors.put(fieldName, message);
+    public Validator notNullIfPresent(String field, Object value, String msg) {
+        if (value == null) errors.put(field, msg);
+        return this;
     }
 
-    public void validate() {
+    /**
+     * positive if provided
+     */
+    public Validator positiveIfPresent(String field, Number value, String msg) {
+        if (value != null && value.doubleValue() <= 0) errors.put(field, msg);
+        return this;
+    }
+
+    /**
+     * min length
+     */
+    public Validator minLength(String field, String value, int min, String msg) {
+        if (value != null && value.length() < min) errors.put(field, msg);
+        return this;
+    }
+
+    /**
+     * max length
+     */
+    public Validator maxLength(String field, String value, int max, String msg) {
+        if (value != null && value.length() > max) errors.put(field, msg);
+        return this;
+    }
+
+    /**
+     * pattern/regex
+     */
+    public Validator matches(String field, String value, String regex, String msg) {
+        if (value != null && !Pattern.matches(regex, value)) errors.put(field, msg);
+        return this;
+    }
+
+    /**
+     * email format (basic)
+     */
+    public Validator email(String field, String value, String msg) {
+        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        if (value != null && !Pattern.matches(regex, value)) errors.put(field, msg);
+        return this;
+    }
+
+    /**
+     * throw if any errors collected
+     */
+    public void throwIfErrors() {
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
-        }
-    }
-
-    public static class FieldValidator {
-        private final Validator parent;
-        private final String fieldName;
-        private final Object value;
-
-        FieldValidator(Validator parent, String fieldName, Object value) {
-            this.parent = parent;
-            this.fieldName = fieldName;
-            this.value = value;
-        }
-
-        public FieldValidator notNull() {
-            if (this.value == null) {
-                parent.addError(fieldName, "Field " + fieldName + " must not be null");
-            }
-            return this;
-        }
-
-        public FieldValidator minLength(int min) {
-            if (value != null && value instanceof String str && str.length() < min) {
-                parent.addError(fieldName, parent.moduleName + " " + fieldName + " must be at least " + min + " characters");
-            }
-            return this;
-        }
-
-        public FieldValidator maxLength(int max) {
-            if (value != null && value instanceof String str && str.length() > max) {
-                parent.addError(fieldName, parent.moduleName + " " + fieldName + " must be at most " + max + " characters");
-            }
-            return this;
-        }
-
-        public Validator done() {
-            return parent;
         }
     }
 }

@@ -3,14 +3,14 @@ package najib.io.utils.validation;
 import java.util.Map;
 
 public class ValidationException extends RuntimeException {
-    private final Map<String, Object> errors;
+    private final Map<String, String> errors;
 
-    public ValidationException(Map<String, Object> errors) {
+    public ValidationException(Map<String, String> errors) {
         super("Validation failed");
         this.errors = errors;
     }
 
-    public Map<String, Object> getErrors() {
+    public Map<String, String> getErrors() {
         return this.errors;
     }
 }

@@ -8,6 +8,7 @@ import najib.io.modules.product.dto.ProductReqDto;
 import najib.io.modules.product.entity.ProductEntity;
 import najib.io.modules.product.mapper.ProductMapper;
 import najib.io.modules.product.repository.ProductRepository;
+import najib.io.modules.product.validator.ProductValidator;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class ProductService {
 
     @Transactional
     public ProductEntity saveProduct(ProductReqDto payload) {
-        // todo -- make validation here
+        ProductValidator.validateCreate(payload);
         ProductEntity product = productMapper.toEntity(payload);
         productRepository.persist(product);
         return product;
@@ -42,9 +43,10 @@ public class ProductService {
 
     @Transactional
     public ProductEntity updateProduct(Long productId, ProductReqDto payload) {
+        ProductValidator.validateUpdate(payload);
         ProductEntity productFound = findById(productId);
-        ProductEntity product = productMapper.toEntity(payload, productFound);
-        productRepository.persist(product);
-        return product;
+        return productMapper.toEntity(payload, productFound);
+//        productRepository.persist(product);
+//        return product;
     }
 }
