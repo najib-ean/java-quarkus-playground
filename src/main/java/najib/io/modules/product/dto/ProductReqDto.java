@@ -2,7 +2,7 @@ package najib.io.modules.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ProductRequestDto {
+public class ProductReqDto {
     @JsonProperty("name")
     private String name;
 
