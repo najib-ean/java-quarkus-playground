@@ -15,9 +15,7 @@ public class GlobalExceptionHandler implements ExceptionMapper<Exception> {
     public Response toResponse(Exception exception) {
         Response.Status status;
         String message = exception.getMessage();
-
-        System.out.println(exception.getMessage());
-
+        
         switch (exception) {
             case BadRequestException badRequestException -> status = Response.Status.BAD_REQUEST;
             case NotFoundException notFoundException -> status = Response.Status.NOT_FOUND;
