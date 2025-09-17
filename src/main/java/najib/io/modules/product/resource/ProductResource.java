@@ -23,17 +23,18 @@ public class ProductResource {
     @Inject
     ProductMapper productMapper;
 
+    // todo -- improve to have pagination
     @GET
     public ApiResponse<List<ProductResDto>> getAllProducts() {
         List<ProductEntity> products = productService.findAllProducts();
-        return ApiResponse.ok(productMapper.toResponse(products));
+        return ApiResponse.ok("Success get all products", productMapper.toResponse(products));
     }
 
     @GET
     @Path("/{id}")
     public ApiResponse<ProductResDto> getProduct(@PathParam("id") Long productId) {
         ProductEntity product = productService.findById(productId);
-        return ApiResponse.ok(productMapper.toResponse(product));
+        return ApiResponse.ok("Success get product", productMapper.toResponse(product));
     }
 
     @POST
@@ -51,7 +52,8 @@ public class ProductResource {
 
     @DELETE
     @Path("/{id}")
-    public String deleteProduct(@PathParam("id") String productId) {
-        return "Product deleted.";
+    public ApiResponse<String> deleteProduct(@PathParam("id") Long productId) {
+        productService.deleteProduct(productId);
+        return ApiResponse.ok("Success delete product with ID: " + String.valueOf(productId));
     }
 }

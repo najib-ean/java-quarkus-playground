@@ -17,6 +17,7 @@ public class ProductMapper extends BaseMapper<ProductEntity, ProductReqDto, Prod
         return product;
     }
 
+    @Override
     public ProductEntity toEntity(ProductReqDto payload, ProductEntity entity) {
         entity.setName(payload.getName() != null ? payload.getName() : entity.getName());
         entity.setQuantity(payload.getQuantity() != null ? payload.getQuantity() : entity.getQuantity());

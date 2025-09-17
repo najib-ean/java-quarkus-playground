@@ -3,6 +3,7 @@ package najib.io.modules.product.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import najib.io.modules.product.dto.ProductReqDto;
 import najib.io.modules.product.entity.ProductEntity;
@@ -46,7 +47,15 @@ public class ProductService {
         ProductValidator.validateUpdate(payload);
         ProductEntity productFound = findById(productId);
         return productMapper.toEntity(payload, productFound);
-//        productRepository.persist(product);
-//        return product;
+    }
+
+    @Transactional
+    public ProductEntity deleteProduct(Long productId) {
+        ProductEntity product = findById(productId);
+        boolean isDeleted = productRepository.softDelete(productId);
+        if (!isDeleted) {
+            throw new BadRequestException("Product not deleted");
+        }
+        return product;
     }
 }

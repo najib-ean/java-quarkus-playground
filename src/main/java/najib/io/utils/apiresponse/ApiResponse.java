@@ -2,31 +2,37 @@ package najib.io.utils.apiresponse;
 
 public class ApiResponse<T> {
     public boolean success;
+    public int status_code;
     public String message;
     public T data;
 
     public ApiResponse() {
     }
 
-    public ApiResponse(boolean success, String message, T data) {
+    public ApiResponse(boolean success, int status, String message, T data) {
         this.success = success;
+        this.status_code = status;
         this.message = message;
         this.data = data;
     }
 
+    public static <T> ApiResponse<T> ok(String message) {
+        return new ApiResponse<>(true, 200, message, null);
+    }
+
     public static <T> ApiResponse<T> ok(T data) {
-        return new ApiResponse<>(true, "Success", data);
+        return new ApiResponse<>(true, 200, "Success", data);
     }
 
     public static <T> ApiResponse<T> ok(String message, T data) {
-        return new ApiResponse<>(true, message, data);
+        return new ApiResponse<>(true, 200, message, data);
     }
 
-    public static <T> ApiResponse<T> fail(String message) {
-        return new ApiResponse<>(false, message, null);
+    public static <T> ApiResponse<T> fail(int status, String message) {
+        return new ApiResponse<>(false, status, message, null);
     }
 
-    public static <T> ApiResponse<T> fail(String message, T data) {
-        return new ApiResponse<>(false, message, data);
+    public static <T> ApiResponse<T> fail(int status, String message, T data) {
+        return new ApiResponse<>(false, status, message, data);
     }
 }
