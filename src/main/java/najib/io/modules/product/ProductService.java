@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import najib.io.common.BaseMapper;
 import najib.io.common.BaseRepository;
 import najib.io.common.BaseService;
+import najib.io.common.BaseValidator;
 import najib.io.modules.product.dto.ProductReqDto;
 import najib.io.modules.product.dto.ProductResDto;
 
@@ -16,6 +17,9 @@ public class ProductService extends BaseService<ProductEntity, ProductReqDto, Pr
 
     @Inject
     ProductMapper productMapper;
+
+    @Inject
+    ProductValidator productValidator;
 
     @Override
     protected BaseRepository<ProductEntity> repository() {
@@ -30,5 +34,10 @@ public class ProductService extends BaseService<ProductEntity, ProductReqDto, Pr
     @Override
     protected String moduleName() {
         return "product";
+    }
+
+    @Override
+    protected BaseValidator<ProductReqDto> validator() {
+        return productValidator;
     }
 }

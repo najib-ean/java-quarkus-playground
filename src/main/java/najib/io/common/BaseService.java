@@ -14,6 +14,8 @@ public abstract class BaseService<Entity, ReqDto, ResDto> {
 
     protected abstract String moduleName();
 
+    protected abstract BaseValidator<ReqDto> validator();
+
     protected List<Entity> findAll(int page, int size, String sortField, String sortOrder, Map<String, String> filters) {
         return repository().findPaginated(page, size, sortField, sortOrder, filters);
     }
@@ -28,7 +30,7 @@ public abstract class BaseService<Entity, ReqDto, ResDto> {
 
     @Transactional
     protected Entity save(ReqDto dto) {
-        // validate using abstract validator dto
+        validator().validateCreate(dto);
         Entity entity = mapper().toEntity(dto);
         repository().persist(entity);
         return entity;
@@ -36,7 +38,7 @@ public abstract class BaseService<Entity, ReqDto, ResDto> {
 
     @Transactional
     protected Entity update(Long id, ReqDto dto) {
-        // validate using abstract validator dto
+        validator().validateUpdate(dto);
         Entity entity = findById(id);
         return mapper().toEntity(dto, entity);
     }
