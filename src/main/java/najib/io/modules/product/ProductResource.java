@@ -37,7 +37,7 @@ public class ProductResource extends BaseResource<ProductEntity, ProductReqDto, 
     }
 
     @Override
-    protected String modelName() {
+    protected String moduleName() {
         return "product";
     }
 }

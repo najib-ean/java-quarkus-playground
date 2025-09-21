@@ -12,6 +12,8 @@ public abstract class BaseService<Entity, ReqDto, ResDto> {
 
     protected abstract BaseMapper<Entity, ReqDto, ResDto> mapper();
 
+    protected abstract String moduleName();
+
     protected List<Entity> findAll(int page, int size, String sortField, String sortOrder, Map<String, String> filters) {
         return repository().findPaginated(page, size, sortField, sortOrder, filters);
     }
@@ -19,7 +21,7 @@ public abstract class BaseService<Entity, ReqDto, ResDto> {
     protected Entity findById(Long id) {
         Entity entity = repository().findById(id);
         if (entity == null) {
-            throw new NotFoundException("Product not found");
+            throw new NotFoundException(moduleName() + " not found");
         }
         return entity;
     }
@@ -44,7 +46,7 @@ public abstract class BaseService<Entity, ReqDto, ResDto> {
         findById(id);
         boolean isDeleted = repository().softDelete(id);
         if (!isDeleted) {
-            throw new BadRequestException(" not deleted");
+            throw new BadRequestException(moduleName() + " not deleted");
         }
     }
 }

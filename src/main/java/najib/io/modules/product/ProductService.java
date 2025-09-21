@@ -26,4 +26,9 @@ public class ProductService extends BaseService<ProductEntity, ProductReqDto, Pr
     protected BaseMapper<ProductEntity, ProductReqDto, ProductResDto> mapper() {
         return productMapper;
     }
+
+    @Override
+    protected String moduleName() {
+        return "product";
+    }
 }

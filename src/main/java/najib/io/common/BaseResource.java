@@ -17,7 +17,7 @@ public abstract class BaseResource<Entity, ReqDto, ResDto> {
 
     protected abstract BaseMapper<Entity, ReqDto, ResDto> mapper();
 
-    protected abstract String modelName();
+    protected abstract String moduleName();
 
     @GET
     public ApiResponse<List<ResDto>> getAll(
@@ -45,7 +45,7 @@ public abstract class BaseResource<Entity, ReqDto, ResDto> {
         paginationDto.totalItems = repository().countFiltered(filters);
         paginationDto.totalPages = (long) Math.ceil((double) paginationDto.totalItems / size);
 
-        String message = entities.isEmpty() ? "No data found" : "Success get all " + modelName() + "s";
+        String message = entities.isEmpty() ? "No data found" : "Success get all " + moduleName() + "s";
 
         return ApiResponse.okPagination(message, mapper().toResponse(entities), paginationDto);
     }
@@ -54,26 +54,26 @@ public abstract class BaseResource<Entity, ReqDto, ResDto> {
     @Path("/{id}")
     public ApiResponse<ResDto> getOne(@PathParam("id") Long id) {
         Entity entity = service().findById(id);
-        return ApiResponse.ok("Success get " + modelName(), mapper().toResponse(entity));
+        return ApiResponse.ok("Success get " + moduleName(), mapper().toResponse(entity));
     }
 
     @POST
     public ApiResponse<ResDto> create(ReqDto payload) {
         Entity entity = service().save(payload);
-        return ApiResponse.ok("Success create " + modelName(), mapper().toResponse(entity));
+        return ApiResponse.ok("Success create " + moduleName(), mapper().toResponse(entity));
     }
 
     @PATCH
     @Path("/{id}")
     public ApiResponse<ResDto> update(@PathParam("id") Long id, ReqDto payload) {
         Entity entity = service().update(id, payload);
-        return ApiResponse.ok("Success update " + modelName(), mapper().toResponse(entity));
+        return ApiResponse.ok("Success update " + moduleName(), mapper().toResponse(entity));
     }
 
     @DELETE
     @Path("/{id}")
     public ApiResponse<String> delete(@PathParam("id") Long id) {
         service().remove(id);
-        return ApiResponse.ok("Success delete " + modelName() + " with ID: " + id);
+        return ApiResponse.ok("Success delete " + moduleName() + " with ID: " + id);
     }
 }
