@@ -1,10 +1,9 @@
-package najib.io.modules.product.mapper;
+package najib.io.modules.product;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import najib.io.common.BaseMapper;
 import najib.io.modules.product.dto.ProductReqDto;
 import najib.io.modules.product.dto.ProductResDto;
-import najib.io.modules.product.entity.ProductEntity;
 
 @ApplicationScoped
 public class ProductMapper extends BaseMapper<ProductEntity, ProductReqDto, ProductResDto> {

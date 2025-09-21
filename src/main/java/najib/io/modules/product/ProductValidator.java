@@ -1,4 +1,4 @@
-package najib.io.modules.product.validator;
+package najib.io.modules.product;
 
 import najib.io.modules.product.dto.ProductReqDto;
 import najib.io.utils.validation.Validator;
