@@ -12,6 +12,7 @@ import najib.io.modules.product.repository.ProductRepository;
 import najib.io.modules.product.validator.ProductValidator;
 
 import java.util.List;
+import java.util.Map;
 
 @ApplicationScoped
 public class ProductService {
@@ -21,6 +22,10 @@ public class ProductService {
 
     @Inject
     ProductMapper productMapper;
+
+    public List<ProductEntity> findAll(int page, int size, String sortField, String sortOrder, Map<String, String> filters) {
+        return productRepository.findPaginated(page, size, sortField, sortOrder, filters);
+    }
 
     public List<ProductEntity> findAllProducts() {
         return productRepository.findAllActive();
