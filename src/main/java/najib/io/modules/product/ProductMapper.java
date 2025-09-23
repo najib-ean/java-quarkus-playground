@@ -30,6 +30,8 @@ public class ProductMapper extends BaseMapper<ProductEntity, ProductReqDto, Prod
         dto.setId(productEntity.getId());
         dto.setName(productEntity.getName());
         dto.setQuantity(productEntity.getQuantity());
+        dto.setCreatedAt(productEntity.getCreatedAt());
+        dto.setUpdatedAt(productEntity.getUpdatedAt());
 
         return dto;
     }

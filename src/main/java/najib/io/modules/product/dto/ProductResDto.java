@@ -2,9 +2,12 @@ package najib.io.modules.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import najib.io.common.BaseResDto;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ProductResDto {
+@JsonPropertyOrder({"id", "name", "qty", "created_at", "updated_at"})
+public class ProductResDto extends BaseResDto {
     @JsonProperty("id")
     private Long id;
 
