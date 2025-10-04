@@ -11,7 +11,7 @@ public class ProductValidator extends BaseValidator<ProductReqDto> {
     public void validateCreate(ProductReqDto dto) {
         Validator validator = new Validator()
                 .required("name", dto.getName(), "Name is required")
-                .required("qty", dto.getQuantity(), "Qty is required");
+                .required("qty", dto.getQuantity());
         validator.throwIfErrors();
     }
 

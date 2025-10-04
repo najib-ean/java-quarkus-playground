@@ -16,10 +16,18 @@ public class Validator {
     }
 
     /**
+     * must not contain numbers
+     */
+    public Validator notContainOnlyNumbers(String field, String value) {
+        if (value.matches("\\d+")) errors.put(field, field + " must not contain only numbers");
+        return this;
+    }
+
+    /**
      * required (must exist)
      */
-    public Validator required(String field, Object value, String msg) {
-        if (value == null) errors.put(field, msg);
+    public Validator required(String field, Object value) {
+        if (value == null) errors.put(field, field + " is required");
         return this;
     }
 
