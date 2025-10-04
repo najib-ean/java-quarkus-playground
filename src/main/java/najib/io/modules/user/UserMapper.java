@@ -1,6 +1,7 @@
 package najib.io.modules.user;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.BadRequestException;
 import najib.io.common.BaseMapper;
 import najib.io.modules.user.dto.UserReqDto;
 import najib.io.modules.user.dto.UserResDto;
@@ -17,7 +18,7 @@ public class UserMapper extends BaseMapper<UserEntity, UserReqDto, UserResDto> {
         setIfNotNull(payload.getLastName(), userEntity::setLastName);
         setIfNotNull(payload.getAddress(), userEntity::setAddress);
         setIfNotNull(payload.getAge(), userEntity::setAge);
-        setIfNotNull(payload.getGender(), userEntity::setGender);
+        setIfNotNull(toGenderCode(payload.getGender()), userEntity::setGender);
 
         return userEntity;
     }
@@ -34,5 +35,13 @@ public class UserMapper extends BaseMapper<UserEntity, UserReqDto, UserResDto> {
         response.setAddress(entity.getAddress());
         response.setAge(entity.getAge());
         response.setGender(entity.getGender());
+    }
+
+    private int toGenderCode(String gender) {
+        return switch (gender.toLowerCase()) {
+            case "male" -> 1;
+            case "female" -> 0;
+            default -> throw new BadRequestException("Invalid gender value: " + gender);
+        };
     }
 }

@@ -16,7 +16,7 @@ public class UserReqDto {
     private Integer age;
 
     @JsonProperty("gender")
-    private Integer gender;
+    private String gender;
 
     public String getFirstName() {
         return firstName;
@@ -50,11 +50,11 @@ public class UserReqDto {
         this.age = age;
     }
 
-    public Integer getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 }

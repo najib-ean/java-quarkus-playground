@@ -1,6 +1,7 @@
 package najib.io.utils.validation;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -8,18 +9,11 @@ public class Validator {
     private final Map<String, String> errors = new HashMap<>();
 
     /**
-     * required & not blank
-     */
-    public Validator required(String field, String value, String msg) {
-        if (value == null || value.isBlank()) errors.put(field, msg);
-        return this;
-    }
-
-    /**
      * must not contain numbers
      */
     public Validator notContainOnlyNumbers(String field, String value) {
-        if (value.matches("\\d+")) errors.put(field, field + " must not contain only numbers");
+        if (value != null && value.matches("\\d+"))
+            errors.put(field, field + " must not contain only numbers");
         return this;
     }
 
@@ -34,21 +28,32 @@ public class Validator {
     /**
      * not blank if provided (PATCH-friendly)
      */
-    public Validator notBlankIfPresent(String field, String value, String msg) {
-        if (value != null && value.isBlank()) errors.put(field, msg);
+    public Validator notBlankIfPresent(String field, String value) {
+        if (value != null && value.isBlank()) errors.put(field, field + " must not be blank");
         return this;
     }
 
-    public Validator notNullIfPresent(String field, Object value, String msg) {
-        if (value == null) errors.put(field, msg);
+    /**
+     * contained specific array
+     */
+    public Validator genderValidator(String field, String value) {
+        if (value != null) {
+            List<String> allowedGender = List.of("male", "female");
+
+            if (!allowedGender.contains(value.toLowerCase())) {
+                errors.put(field, field + " must be one of " + allowedGender);
+            }
+        }
+
         return this;
     }
 
     /**
      * positive if provided
      */
-    public Validator positiveIfPresent(String field, Number value, String msg) {
-        if (value != null && value.doubleValue() <= 0) errors.put(field, msg);
+    public Validator positiveIfPresent(String field, Number value) {
+        if (value != null && value.doubleValue() <= 0)
+            errors.put(field, field + " must be a positive number");
         return this;
     }
 
