@@ -7,7 +7,7 @@ import jakarta.ws.rs.NotFoundException;
 import java.util.List;
 import java.util.Map;
 
-public abstract class BaseService<Entity, ReqDto, ResDto> {
+public abstract class BaseService<Entity extends BaseEntity, ReqDto, ResDto extends BaseResDto> {
     protected abstract BaseRepository<Entity> repository();
 
     protected abstract BaseMapper<Entity, ReqDto, ResDto> mapper();

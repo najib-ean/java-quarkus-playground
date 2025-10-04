@@ -1,4 +1,4 @@
-package najib.io.utils.apiresponse;
+package najib.io.utils.apiResponse;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import najib.io.common.BasePaginationDto;

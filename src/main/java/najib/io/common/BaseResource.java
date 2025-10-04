@@ -2,7 +2,7 @@ package najib.io.common;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
-import najib.io.utils.apiresponse.ApiResponse;
+import najib.io.utils.apiResponse.ApiResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public abstract class BaseResource<Entity, ReqDto, ResDto> {
+public abstract class BaseResource<Entity extends BaseEntity, ReqDto, ResDto extends BaseResDto> {
     protected abstract BaseRepository<Entity> repository();
 
     protected abstract BaseService<Entity, ReqDto, ResDto> service();

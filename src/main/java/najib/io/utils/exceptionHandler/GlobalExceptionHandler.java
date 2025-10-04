@@ -8,7 +8,7 @@ import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
-import najib.io.utils.apiresponse.ApiResponse;
+import najib.io.utils.apiResponse.ApiResponse;
 import najib.io.utils.validation.ValidationException;
 import org.jboss.logging.Logger;
 

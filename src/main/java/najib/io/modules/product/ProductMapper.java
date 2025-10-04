@@ -8,31 +8,25 @@ import najib.io.modules.product.dto.ProductResDto;
 @ApplicationScoped
 public class ProductMapper extends BaseMapper<ProductEntity, ProductReqDto, ProductResDto> {
     @Override
-    public ProductEntity toEntity(ProductReqDto payload) {
-        ProductEntity product = new ProductEntity();
-        product.setName(payload.getName());
-        product.setQuantity(payload.getQuantity());
+    public ProductEntity toEntity(ProductReqDto payload, ProductEntity productEntity) {
+        if (productEntity == null) {
+            productEntity = new ProductEntity();
+        }
 
-        return product;
+        setIfNotNull(payload.getName(), productEntity::setName);
+        setIfNotNull(payload.getQuantity(), productEntity::setQuantity);
+
+        return productEntity;
     }
 
     @Override
-    public ProductEntity toEntity(ProductReqDto payload, ProductEntity entity) {
-        entity.setName(payload.getName() != null ? payload.getName() : entity.getName());
-        entity.setQuantity(payload.getQuantity() != null ? payload.getQuantity() : entity.getQuantity());
-
-        return entity;
+    protected ProductResDto toResponse() {
+        return new ProductResDto();
     }
 
     @Override
-    public ProductResDto toResponse(ProductEntity productEntity) {
-        ProductResDto dto = new ProductResDto();
-        dto.setId(productEntity.getId());
-        dto.setName(productEntity.getName());
-        dto.setQuantity(productEntity.getQuantity());
-        dto.setCreatedAt(productEntity.getCreatedAt());
-        dto.setUpdatedAt(productEntity.getUpdatedAt());
-
-        return dto;
+    protected void mapResponse(ProductEntity entity, ProductResDto response) {
+        response.setName(entity.getName());
+        response.setQuantity(entity.getQuantity());
     }
 }
