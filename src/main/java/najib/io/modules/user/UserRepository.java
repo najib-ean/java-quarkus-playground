@@ -8,7 +8,7 @@ import java.util.Set;
 @ApplicationScoped
 public class UserRepository extends BaseRepository<UserEntity> {
     @Override
-    protected Set<String> allowedFields() {
+    protected Set<String> allowedSearchQueryFields() {
         return Set.of("firstName", "lastName", "address");
     }
 }

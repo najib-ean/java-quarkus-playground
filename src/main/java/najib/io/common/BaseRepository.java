@@ -13,7 +13,7 @@ import java.util.Set;
 
 public abstract class BaseRepository<T> implements PanacheRepository<T> {
 
-    protected abstract Set<String> allowedFields();
+    protected abstract Set<String> allowedSearchQueryFields();
 
     /**
      *
@@ -34,10 +34,9 @@ public abstract class BaseRepository<T> implements PanacheRepository<T> {
 
         FilterQuery filterQuery = queries(filters);
 
-        String safeSortField = allowedFields().contains(sortField) ? sortField : "updatedAt";
         Sort sort = sortOrder.equals("DESC")
-                ? Sort.by(safeSortField).descending()
-                : Sort.by(safeSortField).ascending();
+                ? Sort.by(sortField).descending()
+                : Sort.by(sortField).ascending();
 
         return find(filterQuery.query, sort, filterQuery.params.toArray())
                 .page(panachePage)
@@ -58,7 +57,7 @@ public abstract class BaseRepository<T> implements PanacheRepository<T> {
             String field = entry.getKey();
             String value = entry.getValue();
 
-            if (allowedFields().contains(field) && value != null && !value.isBlank()) {
+            if (allowedSearchQueryFields().contains(field) && value != null && !value.isBlank()) {
                 query.append(" and lower(").append(field).append(") like ?").append(index);
                 params.add("%" + value.toLowerCase() + "%");
                 index++;
