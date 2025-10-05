@@ -3,6 +3,9 @@ package najib.io.common;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import najib.io.utils.apiResponse.ApiResponse;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.ExampleObject;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +23,31 @@ public abstract class BaseResource<Entity extends BaseEntity, ReqDto, ResDto ext
     protected abstract String moduleName();
 
     @GET
+    @APIResponse(
+            responseCode = "200",
+            content = @Content(
+                    mediaType = "application/json",
+                    examples = {
+                            @ExampleObject(
+                                    name = "Success Example",
+                                    value = """
+                                            {
+                                              "success": true,
+                                              "status_code": 200,
+                                              "message": "Success get all",
+                                              "data": "< ARRAY_OF_DATA_SAME_LIKE_GET_ONE >",
+                                              "pagination": {
+                                                "page": 1,
+                                                "size": 10,
+                                                "totalItems": 100,
+                                                "totalPages": 10
+                                              }
+                                            }
+                                            """
+                            )
+                    }
+            )
+    )
     public ApiResponse<List<ResDto>> getAll(
             @QueryParam("page") @DefaultValue("1") int page,
             @QueryParam("size") @DefaultValue("10") int size,
@@ -58,6 +86,25 @@ public abstract class BaseResource<Entity extends BaseEntity, ReqDto, ResDto ext
     }
 
     @POST
+    @APIResponse(
+            responseCode = "200",
+            content = @Content(
+                    mediaType = "application/json",
+                    examples = {
+                            @ExampleObject(
+                                    name = "Success Example",
+                                    value = """
+                                            {
+                                              "success": true,
+                                              "status_code": 200,
+                                              "message": "Success create",
+                                              "data": "< DATA_SAME_LIKE_GET_ONE >"
+                                            }
+                                            """
+                            )
+                    }
+            )
+    )
     public ApiResponse<ResDto> create(ReqDto payload) {
         Entity entity = service().save(payload);
         return ApiResponse.ok("Success create " + moduleName(), mapper().toResponse(entity));
@@ -65,6 +112,25 @@ public abstract class BaseResource<Entity extends BaseEntity, ReqDto, ResDto ext
 
     @PATCH
     @Path("/{id}")
+    @APIResponse(
+            responseCode = "200",
+            content = @Content(
+                    mediaType = "application/json",
+                    examples = {
+                            @ExampleObject(
+                                    name = "Success Example",
+                                    value = """
+                                            {
+                                              "success": true,
+                                              "status_code": 200,
+                                              "message": "Success update",
+                                              "data": "< DATA_SAME_LIKE_GET_ONE >"
+                                            }
+                                            """
+                            )
+                    }
+            )
+    )
     public ApiResponse<ResDto> update(@PathParam("id") Long id, ReqDto payload) {
         Entity entity = service().update(id, payload);
         return ApiResponse.ok("Success update " + moduleName(), mapper().toResponse(entity));
@@ -72,6 +138,24 @@ public abstract class BaseResource<Entity extends BaseEntity, ReqDto, ResDto ext
 
     @DELETE
     @Path("/{id}")
+    @APIResponse(
+            responseCode = "200",
+            content = @Content(
+                    mediaType = "application/json",
+                    examples = {
+                            @ExampleObject(
+                                    name = "Success Example",
+                                    value = """
+                                            {
+                                              "success": true,
+                                              "status_code": 200,
+                                              "message": "Success delete with ID: <id>"
+                                            }
+                                            """
+                            )
+                    }
+            )
+    )
     public ApiResponse<String> delete(@PathParam("id") Long id) {
         service().remove(id);
         return ApiResponse.ok("Success delete " + moduleName() + " with ID: " + id);

@@ -8,8 +8,15 @@ import najib.io.common.BaseResource;
 import najib.io.common.BaseService;
 import najib.io.modules.user.dto.UserReqDto;
 import najib.io.modules.user.dto.UserResDto;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 @Path("/user")
+@APIResponse(
+        responseCode = "200",
+        content = @Content(schema = @Schema(implementation = UserSingleResponse.class))
+)
 public class UserResource extends BaseResource<UserEntity, UserReqDto, UserResDto> {
 
     @Inject
