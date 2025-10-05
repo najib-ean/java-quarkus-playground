@@ -15,6 +15,14 @@ public abstract class BaseRepository<T> implements PanacheRepository<T> {
 
     protected abstract Set<String> allowedFields();
 
+    /**
+     *
+     * TODO:
+     * at query params for search purpose, they still need to put "camelCase" while at the response has been used "snake_case".
+     * if i do necessary to create converter method, it will interfere performance due to loop check.
+     * let's see if FrontEnd don't mind if use "camelCase".
+     *
+     */
     public List<T> findPaginated(
             int page,
             int size,
