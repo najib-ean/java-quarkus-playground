@@ -8,8 +8,15 @@ import najib.io.common.BaseResource;
 import najib.io.common.BaseService;
 import najib.io.modules.product.dto.ProductReqDto;
 import najib.io.modules.product.dto.ProductResDto;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 
 @Path("/product")
+@APIResponse(
+        responseCode = "200",
+        content = @Content(schema = @Schema(implementation = ProductSingleResponse.class))
+)
 public class ProductResource extends BaseResource<ProductEntity, ProductReqDto, ProductResDto> {
 
     @Inject
