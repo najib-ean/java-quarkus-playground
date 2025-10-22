@@ -3,6 +3,7 @@ package najib.io.modules.user;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.BadRequestException;
 import najib.io.common.BaseMapper;
+import najib.io.entities.UserEntity;
 import najib.io.modules.user.dto.UserReqDto;
 import najib.io.modules.user.dto.UserResDto;
 

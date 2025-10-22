@@ -1,7 +1,8 @@
-package najib.io.modules.product;
+package najib.io.repositories;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import najib.io.common.BaseRepository;
+import najib.io.entities.ProductEntity;
 
 import java.util.Set;
 

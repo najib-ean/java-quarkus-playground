@@ -1,4 +1,4 @@
-package najib.io.modules.user;
+package najib.io.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

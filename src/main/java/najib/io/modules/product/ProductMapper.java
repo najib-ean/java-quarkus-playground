@@ -2,6 +2,7 @@ package najib.io.modules.product;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import najib.io.common.BaseMapper;
+import najib.io.entities.ProductEntity;
 import najib.io.modules.product.dto.ProductReqDto;
 import najib.io.modules.product.dto.ProductResDto;
 

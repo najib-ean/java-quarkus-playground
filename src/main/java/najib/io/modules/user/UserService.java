@@ -6,8 +6,10 @@ import najib.io.common.BaseMapper;
 import najib.io.common.BaseRepository;
 import najib.io.common.BaseService;
 import najib.io.common.BaseValidator;
+import najib.io.entities.UserEntity;
 import najib.io.modules.user.dto.UserReqDto;
 import najib.io.modules.user.dto.UserResDto;
+import najib.io.repositories.UserRepository;
 
 @ApplicationScoped
 public class UserService extends BaseService<UserEntity, UserReqDto, UserResDto> {

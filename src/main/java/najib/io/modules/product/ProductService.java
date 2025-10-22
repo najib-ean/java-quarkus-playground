@@ -6,8 +6,10 @@ import najib.io.common.BaseMapper;
 import najib.io.common.BaseRepository;
 import najib.io.common.BaseService;
 import najib.io.common.BaseValidator;
+import najib.io.entities.ProductEntity;
 import najib.io.modules.product.dto.ProductReqDto;
 import najib.io.modules.product.dto.ProductResDto;
+import najib.io.repositories.ProductRepository;
 
 @ApplicationScoped
 public class ProductService extends BaseService<ProductEntity, ProductReqDto, ProductResDto> {
