@@ -3,5 +3,9 @@ GET https://examples.http-client.intellij.net/get
     ?generated-in=IntelliJ IDEA
 
 ###
-GET http://localhost:8080/hello/world
+GET http://localhost:3100/hello/world
+Content-Type: */*
+
+###
+GET http://localhost:3100/product
 Content-Type: */*
