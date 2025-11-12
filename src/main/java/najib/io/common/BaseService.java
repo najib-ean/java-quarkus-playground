@@ -1,8 +1,11 @@
 package najib.io.common;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import jakarta.validation.groups.ConvertGroup;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
+import najib.io.utils.validation.OnUpdate;
 
 import java.util.List;
 import java.util.Map;
@@ -37,7 +40,7 @@ public abstract class BaseService<Entity extends BaseEntity, ReqDto, ResDto exte
     }
 
     @Transactional
-    protected Entity update(Long id, ReqDto dto) {
+    protected Entity update(Long id, @Valid @ConvertGroup(to = OnUpdate.class) ReqDto dto) {
         validator().validateUpdate(dto);
         Entity entity = findById(id);
         return mapper().toEntity(dto, entity);

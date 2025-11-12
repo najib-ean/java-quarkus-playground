@@ -9,3 +9,20 @@ Content-Type: */*
 ###
 GET http://localhost:3100/product
 Content-Type: */*
+
+###
+POST http://localhost:3100/product
+Content-Type: application/json
+
+{
+  "name": "book",
+  "quantity": 23
+}
+
+###
+PATCH http://localhost:3100/product/23
+Content-Type: application/json
+
+{
+  "quantity": 0
+}
