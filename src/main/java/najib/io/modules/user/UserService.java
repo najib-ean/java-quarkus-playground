@@ -5,7 +5,6 @@ import jakarta.inject.Inject;
 import najib.io.common.BaseMapper;
 import najib.io.common.BaseRepository;
 import najib.io.common.BaseService;
-import najib.io.common.BaseValidator;
 import najib.io.entities.UserEntity;
 import najib.io.modules.user.dto.UserReqDto;
 import najib.io.modules.user.dto.UserResDto;
@@ -20,9 +19,6 @@ public class UserService extends BaseService<UserEntity, UserReqDto, UserResDto>
     @Inject
     UserMapper userMapper;
 
-    @Inject
-    UserValidator userValidator;
-
     @Override
     protected BaseRepository<UserEntity> repository() {
         return userRepository;
@@ -36,10 +32,5 @@ public class UserService extends BaseService<UserEntity, UserReqDto, UserResDto>
     @Override
     protected String moduleName() {
         return "user";
-    }
-
-    @Override
-    protected BaseValidator<UserReqDto> validator() {
-        return userValidator;
     }
 }

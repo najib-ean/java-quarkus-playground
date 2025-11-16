@@ -9,7 +9,6 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 import najib.io.utils.apiResponse.ApiResponse;
-import najib.io.utils.validation.ValidationException;
 import org.jboss.logging.Logger;
 
 @Provider
@@ -29,10 +28,6 @@ public class GlobalExceptionHandler implements ExceptionMapper<Exception> {
             case NotFoundException notFoundException -> status = Response.Status.NOT_FOUND;
             case UnauthorizedException unauthorizedException ->
                     status = Response.Status.UNAUTHORIZED;
-            case ValidationException validationException -> {
-                status = Response.Status.BAD_REQUEST;
-                return Response.status(status).entity(ApiResponse.fail(status.getStatusCode(), "Validation Error", validationException.getErrors())).build();
-            }
             default -> {
                 logger.info(message, exception);
                 status = Response.Status.INTERNAL_SERVER_ERROR;

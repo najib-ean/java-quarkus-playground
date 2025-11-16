@@ -2,16 +2,17 @@ package najib.io.utils.validation.custom;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import najib.io.enums.Gender;
 
-public class AlphabetOnlyValidator implements ConstraintValidator<AlphabetOnly, String> {
-    private static final String regex = "^[\\p{L}. ]*$";
+import java.util.Arrays;
 
+public class ValidGenderValidator implements ConstraintValidator<ValidGender, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
         if (value == null) {
             return true;
         }
 
-        return value.matches(regex);
+        return Arrays.stream(Gender.values()).anyMatch(gender -> gender.name().equalsIgnoreCase(value));
     }
 }

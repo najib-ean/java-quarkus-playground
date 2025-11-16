@@ -19,7 +19,9 @@ public class UserMapper extends BaseMapper<UserEntity, UserReqDto, UserResDto> {
         setIfNotNull(payload.getLastName(), userEntity::setLastName);
         setIfNotNull(payload.getAddress(), userEntity::setAddress);
         setIfNotNull(payload.getAge(), userEntity::setAge);
-        setIfNotNull(toGenderCode(payload.getGender()), userEntity::setGender);
+
+        Integer gender = payload.getGender() == null ? null : toGenderCode(payload.getGender());
+        setIfNotNull(gender, userEntity::setGender);
 
         return userEntity;
     }

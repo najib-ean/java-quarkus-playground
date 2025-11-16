@@ -18,8 +18,6 @@ public abstract class BaseService<Entity extends BaseEntity, ReqDto, ResDto exte
 
     protected abstract String moduleName();
 
-    protected abstract BaseValidator<ReqDto> validator();
-
     protected List<Entity> findAll(int page, int size, String sortField, String sortOrder, Map<String, String> filters) {
         return repository().findPaginated(page, size, sortField, sortOrder, filters);
     }

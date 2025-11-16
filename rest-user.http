@@ -3,7 +3,7 @@ GET http://localhost:3100/user
 Content-Type: */*
 
 ### get one by id
-GET http://localhost:3100/user/1
+GET http://localhost:3100/user/6
 Content-Type: */*
 
 ### create
@@ -11,18 +11,22 @@ POST http://localhost:3100/user
 Content-Type: application/json
 
 {
-  "name": "book",
-  "quantity": 23
+  "first_name": "ani",
+  "last_name": "ani",
+  "address": "Batam Center",
+  "age": 30,
+  "gender": "female"
 }
 
 ### update
-PATCH http://localhost:3100/user/23
+PATCH http://localhost:3100/user/6
 Content-Type: application/json
 
 {
-  "quantity": 0
+  "last_name": "T. Moesa",
+  "gender": "female"
 }
 
 ### delete
-DELETE http://localhost:3100/user/23
+DELETE http://localhost:3100/user/7
 Content-Type: application/json
