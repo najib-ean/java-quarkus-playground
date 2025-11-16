@@ -1,6 +1,16 @@
 package najib.io.enums;
 
 public enum Gender {
-    MALE,
-    FEMALE
+    MALE("Male"),
+    FEMALE("Female");
+
+    private final String label;
+
+    Gender(String label) {
+        this.label = label;
+    }
+
+    public String label() {
+        return label;
+    }
 }
