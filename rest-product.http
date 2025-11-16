@@ -1,13 +1,9 @@
-### GET request to example server
-GET https://examples.http-client.intellij.net/get
-    ?generated-in=IntelliJ IDEA
-
-###
-GET http://localhost:3100/hello/world
+### get all
+GET http://localhost:3100/product
 Content-Type: */*
 
-###
-GET http://localhost:3100/product
+### get one by id
+GET http://localhost:3100/product/23
 Content-Type: */*
 
 ###
@@ -15,8 +11,8 @@ POST http://localhost:3100/product
 Content-Type: application/json
 
 {
-  "name": "book",
-  "quantity": 23
+  "name": "najib",
+  "quantity": 0
 }
 
 ###
@@ -24,5 +20,9 @@ PATCH http://localhost:3100/product/23
 Content-Type: application/json
 
 {
-  "quantity": 0
+  "name": ""
 }
+
+### delete
+DELETE http://localhost:3100/product/24
+Content-Type: application/json

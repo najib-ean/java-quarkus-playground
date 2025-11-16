@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.groups.ConvertGroup;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
+import najib.io.utils.validation.OnCreate;
 import najib.io.utils.validation.OnUpdate;
 
 import java.util.List;
@@ -32,8 +33,7 @@ public abstract class BaseService<Entity extends BaseEntity, ReqDto, ResDto exte
     }
 
     @Transactional
-    protected Entity save(ReqDto dto) {
-        validator().validateCreate(dto);
+    protected Entity save(@Valid @ConvertGroup(to = OnCreate.class) ReqDto dto) {
         Entity entity = mapper().toEntity(dto);
         repository().persist(entity);
         return entity;
@@ -41,7 +41,6 @@ public abstract class BaseService<Entity extends BaseEntity, ReqDto, ResDto exte
 
     @Transactional
     protected Entity update(Long id, @Valid @ConvertGroup(to = OnUpdate.class) ReqDto dto) {
-        validator().validateUpdate(dto);
         Entity entity = findById(id);
         return mapper().toEntity(dto, entity);
     }

@@ -20,9 +20,6 @@ public class ProductService extends BaseService<ProductEntity, ProductReqDto, Pr
     @Inject
     ProductMapper productMapper;
 
-    @Inject
-    ProductValidator productValidator;
-
     @Override
     protected BaseRepository<ProductEntity> repository() {
         return productRepository;
@@ -40,6 +37,6 @@ public class ProductService extends BaseService<ProductEntity, ProductReqDto, Pr
 
     @Override
     protected BaseValidator<ProductReqDto> validator() {
-        return productValidator;
+        return null;
     }
 }

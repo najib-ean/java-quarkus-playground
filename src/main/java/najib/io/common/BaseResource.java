@@ -1,6 +1,5 @@
 package najib.io.common;
 
-import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import najib.io.utils.apiResponse.ApiResponse;
@@ -60,7 +59,7 @@ public abstract class BaseResource<Entity extends BaseEntity, ReqDto, ResDto ext
     }
 
     @POST
-    public ApiResponse<ResDto> create(@Valid ReqDto payload) {
+    public ApiResponse<ResDto> create(ReqDto payload) {
         Entity entity = service().save(payload);
         return ApiResponse.success("Success create " + moduleName(), mapper().toResponse(entity));
     }
