@@ -1,6 +1,7 @@
 package najib.io.utils.apiResponse;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import najib.io.common.BasePaginationDto;
 
 /**
@@ -10,6 +11,7 @@ import najib.io.common.BasePaginationDto;
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({"success", "status_code", "message", "data", "pagination"})
 public class PaginatedResponse<T> {
     public boolean success;
     public int status_code;

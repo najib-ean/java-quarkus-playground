@@ -1,8 +1,10 @@
 package najib.io.utils.apiResponse;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({"success", "status_code", "message", "data"})
 public class ApiResponse<T> {
     public boolean success;
     public int status_code;
