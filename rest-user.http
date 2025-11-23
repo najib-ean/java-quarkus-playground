@@ -19,11 +19,11 @@ Content-Type: application/json
 }
 
 ### update
-PATCH http://localhost:3100/user/1
+PATCH http://localhost:3100/user/2
 Content-Type: application/json
 
 {
-  "gender": "MALE"
+  "gender": "female"
 }
 
 ### delete
