@@ -1,16 +1,14 @@
 package najib.io.modules.product.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import najib.io.common.BaseResDto;
+import najib.io.modules.user.dto.UserResDto;
 
-@JsonPropertyOrder({"id", "name", "qty", "created_at", "updated_at"})
+@JsonPropertyOrder({"id", "name", "qty", "user", "created_at", "updated_at"})
 public class ProductResDto extends BaseResDto {
-    @JsonProperty("name")
     private String name;
-
-    @JsonProperty("qty")
     private Integer quantity;
+    private UserResDto user;
 
     public String getName() {
         return name;
@@ -26,5 +24,13 @@ public class ProductResDto extends BaseResDto {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public UserResDto getUser() {
+        return user;
+    }
+
+    public void setUser(UserResDto user) {
+        this.user = user;
     }
 }

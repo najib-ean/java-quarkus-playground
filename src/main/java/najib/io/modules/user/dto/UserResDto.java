@@ -1,14 +1,13 @@
 package najib.io.modules.user.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import najib.io.common.BaseResDto;
 
 @JsonPropertyOrder(
         {
                 "id",
-                "first_name",
-                "last_name",
+                "firstName",
+                "lastName",
                 "address",
                 "age",
                 "gender",
@@ -16,19 +15,10 @@ import najib.io.common.BaseResDto;
                 "updated_at"
         })
 public class UserResDto extends BaseResDto {
-    @JsonProperty("first_name")
     private String firstName;
-
-    @JsonProperty("last_name")
     private String lastName;
-
-    @JsonProperty("address")
     private String address;
-
-    @JsonProperty("age")
     private Integer age;
-
-    @JsonProperty("gender")
     private String gender;
 
     public String getFirstName() {

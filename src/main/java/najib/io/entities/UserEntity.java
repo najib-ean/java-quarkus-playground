@@ -1,8 +1,12 @@
 package najib.io.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import najib.io.common.BaseEntity;
+
+import java.util.List;
 
 @Entity(name = "\"user\"")
 public class UserEntity extends BaseEntity {
@@ -20,6 +24,9 @@ public class UserEntity extends BaseEntity {
 
     @Column(name = "gender")
     private Integer gender;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductEntity> product;
 
     public String getFirstName() {
         return firstName;
@@ -59,5 +66,13 @@ public class UserEntity extends BaseEntity {
 
     public void setGender(Integer gender) {
         this.gender = gender;
+    }
+
+    public List<ProductEntity> getProduct() {
+        return product;
+    }
+
+    public void setProduct(List<ProductEntity> product) {
+        this.product = product;
     }
 }

@@ -25,9 +25,15 @@ public class ContraintViolationHandler implements ExceptionMapper<ConstraintViol
             if (key.contains(".")) {
                 key = key.substring(key.lastIndexOf(".") + 1);
             }
+
+            key = toSnakeCase(key);
             errors.put(key, violation.getMessage());
         }
-        
+
         return Response.status(status).entity(ApiResponse.fail(status.getStatusCode(), "Validation Error", errors)).build();
+    }
+
+    private String toSnakeCase(String camelCase) {
+        return camelCase.replaceAll("([a-z])([A-Z]+)", "$1_$2").toLowerCase();
     }
 }

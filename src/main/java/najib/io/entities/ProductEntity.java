@@ -1,7 +1,6 @@
 package najib.io.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import najib.io.common.BaseEntity;
 
 @Entity(name = "product")
@@ -11,6 +10,10 @@ public class ProductEntity extends BaseEntity {
 
     @Column(name = "quantity")
     private Integer quantity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
     public String getName() {
         return name;
@@ -26,5 +29,13 @@ public class ProductEntity extends BaseEntity {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }
