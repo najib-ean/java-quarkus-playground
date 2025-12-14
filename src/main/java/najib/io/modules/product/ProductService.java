@@ -37,14 +37,4 @@ public class ProductService extends BaseService<ProductEntity, ProductReqDto, Pr
     protected String moduleName() {
         return "product";
     }
-
-    //    @Override
-    //    @Transactional
-    //    protected ProductEntity save(@Valid @ConvertGroup(to = OnCreate.class) ProductReqDto dto) {
-    //        UserEntity user = userRepository.findById(dto.getUserId());
-    //        if (user == null) {
-    //            throw new BadRequestException("User not found");
-    //        }
-    //        return super.save(dto);
-    //    }
 }
