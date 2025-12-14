@@ -3,7 +3,7 @@ GET http://localhost:3100/product
 Content-Type: */*
 
 ### get one by id
-GET http://localhost:3100/product/23
+GET http://localhost:3100/product/30
 Content-Type: */*
 
 ###
@@ -11,8 +11,9 @@ POST http://localhost:3100/product
 Content-Type: application/json
 
 {
-  "name": "najib",
-  "quantity": 0
+  "name": "Tas",
+  "quantity": 12,
+  "user_id": 2
 }
 
 ###

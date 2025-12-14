@@ -3,7 +3,7 @@ GET http://localhost:3100/user
 Content-Type: */*
 
 ### get one by id
-GET http://localhost:3100/user/1
+GET http://localhost:3100/user/2
 Content-Type: */*
 
 ### create
@@ -11,8 +11,8 @@ POST http://localhost:3100/user
 Content-Type: application/json
 
 {
-  "first_name": "ani",
-  "last_name": "ani",
+  "first_name": "ana",
+  "last_name": "ana",
   "address": "Batam Center",
   "age": 30,
   "gender": "female"
