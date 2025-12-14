@@ -2,6 +2,9 @@ package najib.io.modules.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import najib.io.common.BaseResDto;
+import najib.io.modules.product.dto.ProductResDto;
+
+import java.util.List;
 
 @JsonPropertyOrder(
         {
@@ -11,6 +14,7 @@ import najib.io.common.BaseResDto;
                 "address",
                 "age",
                 "gender",
+                "products",
                 "created_at",
                 "updated_at"
         })
@@ -20,6 +24,7 @@ public class UserResDto extends BaseResDto {
     private String address;
     private Integer age;
     private String gender;
+    private List<ProductResDto> products;
 
     public String getFirstName() {
         return firstName;
@@ -59,5 +64,13 @@ public class UserResDto extends BaseResDto {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public List<ProductResDto> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<ProductResDto> products) {
+        this.products = products;
     }
 }
