@@ -3,12 +3,13 @@ package najib.io.common;
 import jakarta.persistence.*;
 
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 @MappedSuperclass
 public abstract class BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private ZonedDateTime createdAt;
@@ -39,7 +40,7 @@ public abstract class BaseEntity {
         this.updatedAt = ZonedDateTime.now();
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
