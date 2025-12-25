@@ -1,5 +1,6 @@
 package najib.io.modules.user.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,6 +33,20 @@ public class UserReqDto {
     @OptionalNotBlank(groups = OnUpdate.class)
     @ValidGender(groups = {OnCreate.class, OnUpdate.class})
     private String gender;
+
+    @NotBlank(message = "required and must not blank", groups = OnCreate.class)
+    @OptionalNotBlank(groups = OnUpdate.class)
+    private String username;
+
+    @NotBlank(message = "required and must not blank", groups = OnCreate.class)
+    @OptionalNotBlank(groups = OnUpdate.class)
+    @Email(groups = {OnCreate.class, OnUpdate.class})
+    private String email;
+
+    @NotBlank(message = "required and must not blank", groups = OnCreate.class)
+    @OptionalNotBlank(groups = OnUpdate.class)
+    //    @Min(value = 5, groups = {OnCreate.class, OnUpdate.class})
+    private String password;
 
     public String getFirstName() {
         return firstName;
@@ -71,5 +86,29 @@ public class UserReqDto {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

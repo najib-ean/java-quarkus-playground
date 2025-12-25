@@ -9,7 +9,6 @@ import najib.io.entities.ProductEntity;
 import najib.io.modules.product.dto.ProductReqDto;
 import najib.io.modules.product.dto.ProductResDto;
 import najib.io.repositories.ProductRepository;
-import najib.io.repositories.UserRepository;
 
 @ApplicationScoped
 public class ProductService extends BaseService<ProductEntity, ProductReqDto, ProductResDto> {
@@ -19,9 +18,6 @@ public class ProductService extends BaseService<ProductEntity, ProductReqDto, Pr
 
     @Inject
     ProductMapper productMapper;
-
-    @Inject
-    UserRepository userRepository;
 
     @Override
     protected BaseRepository<ProductEntity> repository() {

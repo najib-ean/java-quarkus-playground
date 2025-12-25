@@ -1,14 +1,14 @@
 package najib.io.entities;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import najib.io.common.BaseEntity;
+import najib.io.enums.Gender;
 
 import java.util.List;
+import java.util.Set;
 
-@Entity(name = "users")
+@Entity
+@Table(name = "users")
 public class UserEntity extends BaseEntity {
     @Column(name = "first_name")
     private String firstName;
@@ -36,6 +36,14 @@ public class UserEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductEntity> product;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<RoleEntity> roles;
 
     public String getFirstName() {
         return firstName;
@@ -69,12 +77,14 @@ public class UserEntity extends BaseEntity {
         this.age = age;
     }
 
-    public Integer getGender() {
-        return gender;
+    public String getGender() {
+        return gender == null ?
+                null : gender == 1 ?
+                Gender.MALE.label() : Gender.FEMALE.label();
     }
 
-    public void setGender(Integer gender) {
-        this.gender = gender;
+    public void setGender(String gender) {
+        this.gender = gender.equalsIgnoreCase(Gender.MALE.label()) ? 1 : 0;
     }
 
     public String getUsername() {
@@ -101,11 +111,19 @@ public class UserEntity extends BaseEntity {
         this.password = password;
     }
 
-    public List<ProductEntity> getProduct() {
+    public List<ProductEntity> getProducts() {
         return product;
     }
 
     public void setProduct(List<ProductEntity> product) {
         this.product = product;
+    }
+
+    public Set<RoleEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<RoleEntity> roles) {
+        this.roles = roles;
     }
 }

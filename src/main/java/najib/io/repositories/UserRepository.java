@@ -12,4 +12,12 @@ public class UserRepository extends BaseRepository<UserEntity> {
     protected Set<String> allowedSearchQueryFields() {
         return Set.of("firstName", "lastName", "address");
     }
+
+    public UserEntity findByEmail(String email) {
+        try {
+            return find("WHERE email = ?1 AND deletedBy IS NULL", email).singleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

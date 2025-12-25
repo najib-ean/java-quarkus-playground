@@ -8,6 +8,8 @@ import najib.io.utils.validation.OnUpdate;
 import najib.io.utils.validation.custom.AlphabetOnly;
 import najib.io.utils.validation.custom.OptionalNotBlank;
 
+import java.util.UUID;
+
 public class ProductReqDto {
     @NotBlank(message = "required and must not blank", groups = OnCreate.class)
     @OptionalNotBlank(groups = OnUpdate.class)
@@ -18,8 +20,9 @@ public class ProductReqDto {
     @Min(value = 1, groups = {OnCreate.class, OnUpdate.class})
     private Integer quantity;
 
-    @NotNull(message = "required", groups = OnCreate.class)
-    private Long userId;
+    @NotBlank(message = "required and must not blank", groups = OnCreate.class)
+    @OptionalNotBlank(groups = OnUpdate.class)
+    private String userId;
 
     public String getName() {
         return name;
@@ -29,7 +32,7 @@ public class ProductReqDto {
         return quantity;
     }
 
-    public Long getUserId() {
-        return userId;
+    public UUID getUserId() {
+        return UUID.fromString(userId);
     }
 }

@@ -3,7 +3,8 @@ package najib.io.entities;
 import jakarta.persistence.*;
 import najib.io.common.BaseEntity;
 
-@Entity(name = "products")
+@Entity
+@Table(name = "products")
 public class ProductEntity extends BaseEntity {
     @Column(name = "name")
     private String name;

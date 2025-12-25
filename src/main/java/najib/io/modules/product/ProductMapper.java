@@ -1,6 +1,5 @@
 package najib.io.modules.product;
 
-import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.BadRequestException;
@@ -9,8 +8,7 @@ import najib.io.entities.ProductEntity;
 import najib.io.entities.UserEntity;
 import najib.io.modules.product.dto.ProductReqDto;
 import najib.io.modules.product.dto.ProductResDto;
-import najib.io.modules.user.Helper;
-import najib.io.modules.user.dto.UserResDto;
+import najib.io.modules.user.UserMapper;
 import najib.io.repositories.UserRepository;
 
 @ApplicationScoped
@@ -19,11 +17,11 @@ public class ProductMapper extends BaseMapper<ProductEntity, ProductReqDto, Prod
     UserRepository userRepository;
 
     @Inject
-    Helper helper;
+    UserMapper userMapper;
 
     @Override
-    public ProductEntity toEntity(ProductReqDto payload, ProductEntity productEntity) {
-        UserEntity user = userRepository.findById(payload.getUserId());
+    public ProductEntity toEntity(ProductReqDto req, ProductEntity productEntity) {
+        UserEntity user = userRepository.findById(req.getUserId());
         if (user == null) {
             throw new BadRequestException("User not found");
         }
@@ -34,35 +32,38 @@ public class ProductMapper extends BaseMapper<ProductEntity, ProductReqDto, Prod
 
         productEntity.setUser(user);
 
-        setIfNotNull(payload.getName(), productEntity::setName);
-        setIfNotNull(payload.getQuantity(), productEntity::setQuantity);
+        setIfNotNull(req.getName(), productEntity::setName);
+        setIfNotNull(req.getQuantity(), productEntity::setQuantity);
 
         return productEntity;
     }
 
     @Override
-    protected ProductResDto toResponse() {
+    protected ProductEntity createEntity() {
+        return new ProductEntity();
+    }
+
+    @Override
+    protected ProductResDto createResponse() {
         return new ProductResDto();
     }
 
     @Override
-    protected void mapResponse(ProductEntity entity, ProductResDto response) {
-        response.setName(entity.getName());
-        response.setQuantity(entity.getQuantity());
-        response.setUser(getUserResDto(entity.getUser()));
-    }
-
-    private UserResDto getUserResDto(@Nullable UserEntity userEntity) {
-        if (userEntity == null) {
-            return null;
+    protected void mapToEntity(ProductReqDto req, ProductEntity entity) {
+        UserEntity user = userRepository.findById(req.getUserId());
+        if (user == null) {
+            throw new BadRequestException("User not found");
         }
 
-        UserResDto userResDto = new UserResDto();
-        userResDto.setId(userEntity.getId());
-        userResDto.setFirstName(userEntity.getFirstName());
-        userResDto.setLastName(userEntity.getLastName());
-        userResDto.setAddress(userEntity.getAddress());
-        userResDto.setGender(helper.toGenderString(userEntity.getGender()));
-        return userResDto;
+        entity.setUser(user);
+        setIfNotNull(req.getName(), entity::setName);
+        setIfNotNull(req.getQuantity(), entity::setQuantity);
+    }
+
+    @Override
+    protected void mapToResponse(ProductEntity entity, ProductResDto res) {
+        res.setName(entity.getName());
+        res.setQuantity(entity.getQuantity());
+        res.setUser(userMapper.toResponse(entity.getUser()));
     }
 }

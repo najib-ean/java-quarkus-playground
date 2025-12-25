@@ -1,23 +1,10 @@
 package najib.io.modules.user.dto;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import najib.io.common.BaseResDto;
 import najib.io.modules.product.dto.ProductResDto;
 
 import java.util.List;
 
-@JsonPropertyOrder(
-        {
-                "id",
-                "firstName",
-                "lastName",
-                "address",
-                "age",
-                "gender",
-                "products",
-                "created_at",
-                "updated_at"
-        })
 public class UserResDto extends BaseResDto {
     private String firstName;
     private String lastName;
