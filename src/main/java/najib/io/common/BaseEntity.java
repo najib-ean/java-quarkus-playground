@@ -1,11 +1,15 @@
 package najib.io.common;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @MappedSuperclass
+@SQLRestriction("deleted_at IS NULL")
+@SQLDelete(sql = "UPDATE #{h-schema}#{h-table} SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -16,17 +16,17 @@ import java.util.stream.Collectors;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public abstract class BaseResource<Entity extends BaseEntity, ReqDto, ResDto extends BaseResDto> {
-    protected abstract BaseRepository<Entity> repository();
+public abstract class BaseResource<E extends BaseEntity, Req, Res extends BaseResDto> {
+    protected abstract BaseRepository<E> repository();
 
-    protected abstract BaseService<Entity, ReqDto, ResDto> service();
+    protected abstract BaseService<E, Req, Res> service();
 
-    protected abstract BaseMapper<Entity, ReqDto, ResDto> mapper();
+    protected abstract BaseMapper<E, Req, Res> mapper();
 
     protected abstract String moduleName();
 
     @GET
-    public PaginatedResponse<List<ResDto>> getAll(
+    public PaginatedResponse<List<Res>> getAll(
             @QueryParam("page") @DefaultValue("1") int page,
             @QueryParam("size") @DefaultValue("10") int size,
             @QueryParam("sortField") @DefaultValue("updatedAt") String sortField,
@@ -43,7 +43,7 @@ public abstract class BaseResource<Entity extends BaseEntity, ReqDto, ResDto ext
         Map<String, String> filters = queryParams.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getFirst()));
 
-        List<Entity> entities = service().findAll(page, size, sortField, sortOrder, filters);
+        List<E> entities = service().findAll(page, size, sortField, sortOrder, filters);
 
         BasePaginationDto paginationDto = new BasePaginationDto();
         paginationDto.page = page;
@@ -53,27 +53,27 @@ public abstract class BaseResource<Entity extends BaseEntity, ReqDto, ResDto ext
 
         String message = entities.isEmpty() ? "No data found" : "Success get all " + moduleName() + "s";
 
-        return PaginatedResponse.success(message, service().toDto(entities), paginationDto);
+        return PaginatedResponse.success(message, mapper().toResponse(entities), paginationDto);
     }
 
     @GET
     @Path("/{id}")
-    public ApiResponse<ResDto> getOne(@PathParam("id") UUID id) {
-        Entity entity = service().findById(id);
-        return ApiResponse.success("Success get " + moduleName(), service().toDto(entity));
+    public ApiResponse<Res> getOne(@PathParam("id") String id) {
+        E entity = service().findById(UUID.fromString(id));
+        return ApiResponse.success("Success get " + moduleName(), mapper().toResponse(entity));
     }
 
     @POST
-    public ApiResponse<ResDto> create(@Valid @ConvertGroup(to = OnCreate.class) ReqDto payload) {
-        Entity entity = service().save(payload);
-        return ApiResponse.success("Success create " + moduleName(), service().toDto(entity));
+    public ApiResponse<Res> create(@Valid @ConvertGroup(to = OnCreate.class) Req payload) {
+        E entity = service().save(payload);
+        return ApiResponse.success("Success create " + moduleName(), mapper().toResponse(entity));
     }
 
     @PATCH
     @Path("/{id}")
-    public ApiResponse<ResDto> update(@PathParam("id") UUID id, @Valid @ConvertGroup(to = OnUpdate.class) ReqDto payload) {
-        Entity entity = service().update(id, payload);
-        return ApiResponse.success("Success update " + moduleName(), service().toDto(entity));
+    public ApiResponse<Res> update(@PathParam("id") UUID id, @Valid @ConvertGroup(to = OnUpdate.class) Req payload) {
+        E entity = service().update(id, payload);
+        return ApiResponse.success("Success update " + moduleName(), mapper().toResponse(entity));
     }
 
     @DELETE

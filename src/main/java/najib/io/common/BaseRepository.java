@@ -1,17 +1,13 @@
 package najib.io.common;
 
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import io.quarkus.panache.common.Page;
 import io.quarkus.panache.common.Sort;
-import jakarta.persistence.NoResultException;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-public abstract class BaseRepository<T> implements PanacheRepository<T> {
+public abstract class BaseRepository<E extends BaseEntity> implements PanacheRepositoryBase<E, UUID> {
 
     protected abstract Set<String> allowedSearchQueryFields();
 
@@ -23,7 +19,7 @@ public abstract class BaseRepository<T> implements PanacheRepository<T> {
      * let's see if FrontEnd don't mind if use "camelCase".
      *
      */
-    public List<T> findPaginated(
+    public List<E> findPaginated(
             int page,
             int size,
             String sortField,
@@ -77,19 +73,7 @@ public abstract class BaseRepository<T> implements PanacheRepository<T> {
         }
     }
 
-    public List<T> findAllActive() {
-        return find("where deletedAt is null").list();
-    }
-
-    public T findById(Long id) {
-        try {
-            return find("where id = ?1 and deletedAt is null", id).singleResult();
-        } catch (NoResultException ex) {
-            return null;
-        }
-    }
-
-    public boolean softDelete(Long id) {
-        return update("deletedAt=?1 where id=?2 and deletedAt is null", ZonedDateTime.now(), id) > 0;
+    public boolean softDelete(UUID id) {
+        return update("deletedAt=?1 WHERE id=?2 AND deletedAt IS NULL", ZonedDateTime.now(), id) > 0;
     }
 }
