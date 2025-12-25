@@ -1,0 +1,12 @@
+### login
+POST http://localhost:3100/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@email.com",
+  "password": "password123"
+}
+
+### logout
+POST http://localhost:3100/auth/login
+Content-Type: application/json

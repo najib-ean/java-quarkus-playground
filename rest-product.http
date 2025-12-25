@@ -13,7 +13,7 @@ Content-Type: application/json
 {
   "name": "Tas",
   "quantity": 12,
-  "user_id": 2
+  "user_id": "73588ab3-1742-4d9f-ae87-d5edb946e9d5"
 }
 
 ###

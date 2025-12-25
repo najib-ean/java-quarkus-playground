@@ -3,7 +3,7 @@ GET http://localhost:3100/user
 Content-Type: */*
 
 ### get one by id
-GET http://localhost:3100/user/1
+GET http://localhost:3100/user/73588ab3-1742-4d9f-ae87-d5edb946e9d6
 Content-Type: */*
 
 ### create
@@ -11,11 +11,14 @@ POST http://localhost:3100/user
 Content-Type: application/json
 
 {
-  "first_name": "ana",
-  "last_name": "ana",
+  "first_name": "dia",
+  "last_name": "dia",
   "address": "Batam Center",
   "age": 30,
-  "gender": "female"
+  "gender": "male",
+  "email": "dia@email.com",
+  "username": "diasiapa",
+  "password": "password123"
 }
 
 ### update
